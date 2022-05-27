@@ -9,4 +9,8 @@
   <ItemGroup>
     <ProjectReference Include="..\QuizApp.Core\QuizApp.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="BCrypt" />
+    <None Remove="BCrypt.Net-Next" />
+  </ItemGroup>
 </Project>

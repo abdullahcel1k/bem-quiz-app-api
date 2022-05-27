@@ -1,5 +1,6 @@
 ﻿using System;
 using QuizApp.Core;
+using QuizApp.Core.Helpers;
 using QuizApp.Core.Models;
 using QuizApp.Core.Services;
 
@@ -15,6 +16,8 @@ namespace QuizApp.Services
 
         public async Task<User> CreateUser(User newUser)
         {
+            newUser.PasswordSalt = PasswordHelper.GenerateSalt();
+            newUser.Password = PasswordHelper.HashPassword(newUser.Password , newUser.PasswordSalt);
             await _unitOfWork.Users.AddAsync(newUser);
             await _unitOfWork.CommitAsync();
             return newUser;

@@ -12,6 +12,7 @@
     <None Remove="Repositorie\" />
     <None Remove="Services\" />
     <None Remove="Helpers\" />
+    <None Remove="BCrypt.Net-Next" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -19,5 +20,8 @@
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
     <Folder Include="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
 </Project>

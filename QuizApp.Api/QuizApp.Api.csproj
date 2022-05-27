@@ -15,6 +15,7 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="FluentValidation" Version="11.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,11 +38,16 @@
     <None Remove="MappingProfile\" />
     <None Remove="Validations\" />
     <None Remove="FluentValidation" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Files\" />
+    <None Remove="Files\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Resources\" />
     <Folder Include="Mapping\" />
     <Folder Include="Validations\" />
+    <Folder Include="Files\" />
+    <Folder Include="Files\Images\" />
   </ItemGroup>
 </Project>
