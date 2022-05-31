@@ -14,7 +14,7 @@ namespace QuizApp.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Exam> CreateExam(Exam exam)
+        public async Task<Exam> Create(Exam exam)
         {
             exam.Slug = SlugGenerator.GenerateSlug(exam.Name);
             await _unitOfWork.Exams.AddAsync(exam);
@@ -23,14 +23,27 @@ namespace QuizApp.Services
             return exam;
         }
 
-        public async Task<IEnumerable<Exam>> GetAll()
+        public async Task<Exam> Delete(int id)
         {
-            return await _unitOfWork.Exams.GetAllAsync();
+            var deletedExam = await GetById(id);
+            _unitOfWork.Exams.Remove(deletedExam);
+            await _unitOfWork.CommitAsync();
+            return deletedExam;
         }
 
-        public async Task<Exam> GetExamBySlug(string slug)
+        public async Task<IEnumerable<Exam>> GetAll()
         {
-            return await _unitOfWork.Exams.SingleOrDefaultAsync(x => x.Slug == slug);
+            return await _unitOfWork.Exams.GetExamsWithQuestions();
+        }
+
+        public async Task<Exam> GetById(int id)
+        {
+            return await _unitOfWork.Exams.GetExamWithQuestions(id);
+        }
+
+        public async Task<Exam> GetExamBySlug(string slug, int order)
+        {
+            return await _unitOfWork.Exams.GetBySlugAsync(slug, order);
         }
     }
 }

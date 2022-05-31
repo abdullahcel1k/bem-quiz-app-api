@@ -3,11 +3,9 @@ using QuizApp.Core.Models;
 
 namespace QuizApp.Core.Services
 {
-    public interface IExamService
+    public interface IExamService : IBaseService<Exam>
     {
-        Task<IEnumerable<Exam>> GetAll();
-        Task<Exam> CreateExam(Exam exam);
-        Task<Exam> GetExamBySlug(string slug);
+        Task<Exam> GetExamBySlug(string slug, int order);
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -105,6 +106,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IExamService, ExamService>();
+builder.Services.AddTransient<IQuestionService, QuestionService>();
+builder.Services.AddTransient<IAnswerService, AnswerService>();
 
 // auto mapper eklendi
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

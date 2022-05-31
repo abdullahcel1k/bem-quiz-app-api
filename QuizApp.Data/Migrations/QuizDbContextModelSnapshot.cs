@@ -36,7 +36,7 @@ namespace QuizApp.Data.Migrations
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("QuestionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -101,9 +101,12 @@ namespace QuizApp.Data.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Text")
+                    b.Property<string>("Label")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedTim")
                         .HasColumnType("datetime2");
@@ -155,9 +158,13 @@ namespace QuizApp.Data.Migrations
 
             modelBuilder.Entity("QuizApp.Core.Models.Answer", b =>
                 {
-                    b.HasOne("QuizApp.Core.Models.Question", null)
+                    b.HasOne("QuizApp.Core.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("QuizApp.Core.Models.Question", b =>

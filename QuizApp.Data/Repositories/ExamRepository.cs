@@ -11,6 +11,31 @@ namespace QuizApp.Data.Repositories
         {
         }
 
+        public async ValueTask<Exam> GetExamWithQuestions(int id)
+        {
+            return await Context.Exams
+                    .Where(e => e.Id == id)
+                    .Include(e => e.Questions)
+                    .ThenInclude(q => q.Answers)
+                    .SingleOrDefaultAsync();
+        }
+
+        public async ValueTask<Exam> GetBySlugAsync(string slug, int order)
+        {
+            return await Context.Exams
+                    .Where(e => e.Slug == slug)
+                    .Include(e => e.Questions.Where(q => q.Order == order))
+                    .ThenInclude(q => q.Answers)
+                    .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Exam>> GetExamsWithQuestions()
+        {
+            return await Context.Exams
+                .Include(x => x.Questions)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Exam>> GetQuizAllQuestionWithAnswers(int id)
         {
             return await Context.Exams
