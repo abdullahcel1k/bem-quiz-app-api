@@ -1,5 +1,6 @@
 ﻿using System;
 using QuizApp.Core.Models;
+using QuizApp.Core.ViewModels;
 
 namespace QuizApp.Core.Repositories
 {
@@ -7,7 +8,7 @@ namespace QuizApp.Core.Repositories
     {
         Task<IEnumerable<Exam>> GetQuizAllQuestionWithAnswers(int id);
         Task<IEnumerable<Exam>> GetExamsWithQuestions();
-        ValueTask<Exam> GetBySlugAsync(string slug, int order);
+        ValueTask<ExamPageViewModel> GetBySlugAsync(string slug, int order);
         ValueTask<Exam> GetExamWithQuestions(int id);
     }
 }

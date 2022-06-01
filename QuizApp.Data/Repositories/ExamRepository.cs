@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuizApp.Core.Models;
 using QuizApp.Core.Repositories;
+using QuizApp.Core.ViewModels;
 
 namespace QuizApp.Data.Repositories
 {
@@ -20,13 +21,24 @@ namespace QuizApp.Data.Repositories
                     .SingleOrDefaultAsync();
         }
 
-        public async ValueTask<Exam> GetBySlugAsync(string slug, int order)
+        public async ValueTask<ExamPageViewModel> GetBySlugAsync(string slug, int order)
         {
-            return await Context.Exams
-                    .Where(e => e.Slug == slug)
-                    .Include(e => e.Questions.Where(q => q.Order == order))
-                    .ThenInclude(q => q.Answers)
-                    .SingleOrDefaultAsync();
+            var examPageVM = new ExamPageViewModel();
+            examPageVM.Exam = await Context.Exams.Where(e => e.Slug == slug)
+                .Include(e => e.Questions)
+                .FirstAsync();
+            //await Context.Exams
+            //        .Where(e => e.Slug == slug)
+            //        .Include(e => e.Questions.Where(q => q.Order == order))
+            //        .ThenInclude(q => q.Answers)
+            //        .SingleOrDefaultAsync();
+
+            examPageVM.Question = await Context.Questions
+                    .Where(q => q.ExamId == examPageVM.Exam.Id && q.Order == order)
+                    .Include(q => q.Answers)
+                    .FirstAsync();
+
+            return examPageVM;
         }
 
         public async Task<IEnumerable<Exam>> GetExamsWithQuestions()

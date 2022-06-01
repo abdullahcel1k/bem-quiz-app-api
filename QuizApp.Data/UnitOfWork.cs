@@ -12,6 +12,7 @@ namespace QuizApp.Data
         private ExamRepository _examRepository;
         private QuestionRepository _questionRepository;
         private AnswerRepository _answerRepository;
+        private ExamSessionRepository _examSessionRepository;
 
         public UnitOfWork(QuizDbContext context)
         {
@@ -25,6 +26,8 @@ namespace QuizApp.Data
         public IQuestionRepository Questions => _questionRepository ?? new QuestionRepository(_context);
 
         public IAnswerRepository Answers => _answerRepository ?? new AnswerRepository(_context);
+
+        public IExamSessionRepository ExamSessions => _examSessionRepository ?? new ExamSessionRepository(_context);
 
         public async Task<int> CommitAsync()
         {

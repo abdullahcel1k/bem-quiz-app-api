@@ -35,7 +35,7 @@ namespace QuizApp.Api.Controllers
             if (findedUser == null)
                 return BadRequest(ResponseResource.GenerateResponse(null, false, "Kullanıcı bulunamadı!"));
 
-            if (!BCrypt.Net.BCrypt.Verify(loginResource.Password+findedUser.PasswordSalt, findedUser.Password))
+            if (!BCrypt.Net.BCrypt.Verify(loginResource.Password + findedUser.PasswordSalt, findedUser.Password))
                 return BadRequest(ResponseResource.GenerateResponse(null, false, "Kullanıcı adı veya şifre hatalı!"));
 
 
@@ -49,6 +49,7 @@ namespace QuizApp.Api.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[]{
                              new Claim(ClaimTypes.Name, findedUser.FullName),
+                             new Claim(ClaimTypes.Email, findedUser.Email),
                              new Claim("Role", findedUser.Role.ToString())
                     }
                 ),

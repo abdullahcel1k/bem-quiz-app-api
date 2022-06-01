@@ -3,6 +3,7 @@ using QuizApp.Core;
 using QuizApp.Core.Helpers;
 using QuizApp.Core.Models;
 using QuizApp.Core.Services;
+using QuizApp.Core.ViewModels;
 
 namespace QuizApp.Services
 {
@@ -41,7 +42,7 @@ namespace QuizApp.Services
             return await _unitOfWork.Exams.GetExamWithQuestions(id);
         }
 
-        public async Task<Exam> GetExamBySlug(string slug, int order)
+        public async Task<ExamPageViewModel> GetExamBySlug(string slug, int order)
         {
             return await _unitOfWork.Exams.GetBySlugAsync(slug, order);
         }

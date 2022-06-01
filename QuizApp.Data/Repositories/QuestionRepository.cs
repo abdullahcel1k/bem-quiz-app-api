@@ -1,4 +1,5 @@
-﻿using QuizApp.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizApp.Core.Models;
 using QuizApp.Core.Repositories;
 
 namespace QuizApp.Data.Repositories
@@ -11,12 +12,21 @@ namespace QuizApp.Data.Repositories
 
         public async Task<Question> AddQuestion(Question question)
         {
-            var lastQuestion = Context.Questions
+            try
+            {
+                var lastQuestion = await Context.Questions
                             .Where(q => q.ExamId == question.ExamId)
-                            .OrderByDescending(q => q.Order).SingleOrDefault();
-            question.Order = lastQuestion != null ? lastQuestion.Order + 1 : 1;
+                            .OrderByDescending(q => q.Order)
+                            .Take(1)
+                            .SingleOrDefaultAsync();
+                question.Order = lastQuestion != null ? lastQuestion.Order + 1 : 1;
 
-            await Context.AddAsync(question);
+                await Context.AddAsync(question);
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+            }
 
             return question;
         }

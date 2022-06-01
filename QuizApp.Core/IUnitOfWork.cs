@@ -9,6 +9,7 @@ namespace QuizApp.Core
         IExamRepository Exams { get; }
         IQuestionRepository Questions { get; }
         IAnswerRepository Answers { get; }
+        IExamSessionRepository ExamSessions { get; }
         Task<int> CommitAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -20,16 +21,22 @@ namespace QuizApp.Api.Controllers
         private readonly IExamService _examService;
         private readonly IQuestionService _questionService;
         private readonly IAnswerService _answerService;
+        private readonly IUserService _userService;
+        private readonly IExamSessionService _examSessionService;
         private readonly IMapper _mapper;
 
         public ExamsController(IExamService examService,
             IQuestionService questionService,
             IAnswerService answerService,
+            IUserService userService,
+            IExamSessionService examSessionService,
             IMapper mapper)
         {
             _examService = examService;
             _questionService = questionService;
             _answerService = answerService;
+            _userService = userService;
+            _examSessionService = examSessionService;
             _mapper = mapper;
         }
 
@@ -98,6 +105,18 @@ namespace QuizApp.Api.Controllers
             return Ok(ResponseResource.GenerateResponse(addedQuestion));
         }
 
+
+        [HttpGet("checkAnswer")]
+        public async Task<ActionResult<ResponseResource>> CheckAnswer(int answerId)
+        {
+           string userEmail = this.User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+
+           await _userService.GetUserByEmail(userEmail);
+
+
+
+            return Ok(null);
+        }
     }
 }
 
