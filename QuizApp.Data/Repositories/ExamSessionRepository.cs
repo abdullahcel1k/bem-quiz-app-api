@@ -18,7 +18,7 @@ namespace QuizApp.Data.Repositories
                 .Include(es => es.Answer)
                 .ThenInclude(a => a.Question)
                 .ThenInclude(q => q.Exam)
-                .Where(exs => exs.Answer.Question.ExamId == examId).Count();
+                .Where(exs => exs.Answer.Question.ExamId == examId && exs.Answer.IsCorrect).Count();
         }
     }
 }

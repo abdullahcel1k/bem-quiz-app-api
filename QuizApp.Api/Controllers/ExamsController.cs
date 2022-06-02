@@ -109,13 +109,29 @@ namespace QuizApp.Api.Controllers
         [HttpGet("checkAnswer")]
         public async Task<ActionResult<ResponseResource>> CheckAnswer(int answerId)
         {
-           string userEmail = this.User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+            string userEmail = this.User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
 
-           await _userService.GetUserByEmail(userEmail);
+            var user = await _userService.GetUserByEmail(userEmail);
 
+            var addedExamSession = new ExamSession();
+            addedExamSession.UserId = user.Id;
+            addedExamSession.AnswerId = answerId;
+            await _examSessionService.Create(addedExamSession);
 
+            return Ok(ResponseResource.GenerateResponse(addedExamSession));
+        }
 
-            return Ok(null);
+        [HttpGet("completeExam")]
+        public async Task<ActionResult<ResponseResource>> CompleteExam(int examId)
+        {
+            string userEmail = this.User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault()?.Value;
+
+            var user = await _userService.GetUserByEmail(userEmail);
+
+         
+            var correctChoiceCount = await _examSessionService.CheckExamAnswers(user.Id, examId);
+
+            return Ok(ResponseResource.GenerateResponse(correctChoiceCount));
         }
     }
 }

@@ -109,6 +109,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IExamService, ExamService>();
 builder.Services.AddTransient<IQuestionService, QuestionService>();
 builder.Services.AddTransient<IAnswerService, AnswerService>();
+builder.Services.AddTransient<IExamSessionService, ExamSessionService>();
 
 // auto mapper eklendi
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
